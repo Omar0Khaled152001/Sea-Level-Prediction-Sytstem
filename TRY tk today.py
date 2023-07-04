@@ -216,20 +216,20 @@ while True:
                 for i in range(50):
                     event, values = window.read(timeout=10)
                     progress_bar.UpdateBar(i + 1)
-            algorithm = values['algorithm']
-            model, predictions_train, predictions_test, accuracy_train, accuracy_test = sklearn_model(output_var, algorithm, X_train, y_train, X_test, y_test)
-            if model is not None:
-                fig = plot_predictions(predictions_test, y_test)
-                plt.show(block=False)
-                window2 = sg.Window('Sea Level Prediction Plot', [[sg.Canvas(key='-CANVAS-')]], finalize=True)
-                canvas = FigureCanvasTkAgg(fig, window2['-CANVAS-'].TKCanvas)
-                canvas.draw()
-                canvas.get_tk_widget().pack()
-                window2.read()
-                window2.close()
-            else:
-                sg.Popup("Invalid algorithm selected!", title='Error', font="Helvetica 14")
-            prediction_text.update("r2 score of {} model is: {}".format(algorithm, accuracy_test))
+                algorithm = values['algorithm']
+                model, predictions_train, predictions_test, accuracy_train, accuracy_test = sklearn_model(output_var, algorithm, X_train, y_train, X_test, y_test)
+                if model is not None:
+                    fig = plot_predictions(predictions_test, y_test)
+                    plt.show(block=False)
+                    #window2 = sg.Window('Sea Level Prediction Plot', [[sg.Canvas(key='-CANVAS-')]], finalize=True)
+                    #canvas = FigureCanvasTkAgg(fig, window2['-CANVAS-'].TKCanvas)
+                    #canvas.draw()
+                    #canvas.get_tk_widget().pack()
+                    #window2.read()
+                    #window2.close()
+                else:
+                    sg.Popup("Invalid algorithm selected!", title='Error', font="Helvetica 14")
+            prediction_text.update("R2 score of {} model is: {}".format(algorithm, accuracy_test))
             progress_bar.UpdateBar(0)
 
 window.close()
